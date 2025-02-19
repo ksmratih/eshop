@@ -69,21 +69,21 @@ class ProductControllerTest {
     void testEditProductPage_NotFound() {
         when(productService.findById("1")).thenReturn(null);
         String viewName = productController.editProductPage("1", model);
-        assertEquals("redirect:/product/list", viewName);
+        assertEquals("redirect:list", viewName);
     }
 
     @Test
     void testEditProduct() {
         Product product = new Product();
         String viewName = productController.editProduct("1", product);
-        assertEquals("redirect:/product/list", viewName);
+        assertEquals("redirect:list", viewName);
         verify(productService).update("1", product);
     }
 
     @Test
     void testDeleteProduct() {
         String viewName = productController.deleteProduct("1");
-        assertEquals("redirect:/product/list", viewName);
+        assertEquals("redirect:list", viewName);
         verify(productService).delete("1");
     }
 }
