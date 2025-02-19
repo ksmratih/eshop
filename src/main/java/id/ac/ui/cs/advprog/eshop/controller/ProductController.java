@@ -13,6 +13,7 @@ import java.util.List;
 @RequestMapping("/product")
 public class ProductController {
 
+    public static final String REDIRECT_LIST = "redirect:/product/list";
     @Autowired
     private ProductService service;
 
@@ -25,7 +26,7 @@ public class ProductController {
     @PostMapping("/create")
     public String createProductPost(@ModelAttribute Product product) {
         service.create(product);
-        return "redirect:list";
+        return REDIRECT_LIST;
     }
 
     @GetMapping("/list")
@@ -39,7 +40,7 @@ public class ProductController {
     public String editProductPage(@PathVariable String id, Model model) {
         Product product = service.findById(id);
         if (product == null) {
-            return "redirect:list";
+            return REDIRECT_LIST;
         }
         model.addAttribute("product", product);
         return "editProduct";
@@ -48,13 +49,13 @@ public class ProductController {
     @PostMapping("/edit/{id}")
     public String editProduct(@PathVariable String id, @ModelAttribute Product product) {
         service.update(id, product);
-        return "redirect:list";
+        return REDIRECT_LIST;
     }
 
     @GetMapping("/delete/{id}")
     public String deleteProduct(@PathVariable String id) {
         service.delete(id);
-        return "redirect:list";
+        return REDIRECT_LIST;
     }
 
 }
