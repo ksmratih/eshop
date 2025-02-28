@@ -31,3 +31,14 @@ Another issue was the incorrect redirect path `redirect:list`, which caused navi
 The CI/CD pipeline effectively supports Continuous Integration and Continuous Deployment by automating testing, code quality analysis, and deployment. As soon as changes pass the tests, the application is deployed, making the workflow efficient and seamless. It ensures that all changes are tested before deployment, reducing manual effort and improving software stability. This setup helps keep things running smoothly by following best practices, making development and deployment easier and more reliable.
 
 </details>
+
+<details>
+<Summary><b>Module 3</b></Summary>
+
+### Reflection 1
+
+1. In my project, I applied the SOLID principles to keep the code organized and maintainable. I followed the Single Responsibility Principle (SRP) by separating `CarController` and `ProductController` so each class only handles its own tasks. The Open-Closed Principle (OCP) is implemented using interfaces like `CarService` and `ProductService`, allowing new features to be added without modifying existing code. The Liskov Substitution Principle (LSP) ensures that `CarServiceImpl` and `ProductServiceImpl` can replace their interfaces without issues, making the system more flexible.
+2. These principles make my project easier to manage and expand. With SRP, changes to one part of the code do not affect other parts, reducing errors. OCP allows me to add a new service without changing existing classes. LSP makes sure that different implementations of a service can be used interchangeably. The Interface Segregation Principle (ISP) keeps interfaces small and focused, so classes do not have to implement unnecessary methods. Dependency Inversion Principle (DIP) ensures that controllers depend on service interfaces instead of specific implementations, making the system more flexible and testable.
+3. Without SOLID, the project would be harder to maintain. If controllers depended on specific service implementations, switching to a different database or storage system would require major code changes. A lack of SRP would make classes too complex, and without OCP, adding new features could break existing code. Ignoring these principles would lead to tight coupling, making the system hard to modify and expand. By following SOLID, my code is clean, scalable, and easier to update.
+
+</details>
