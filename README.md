@@ -44,3 +44,19 @@ The CI/CD pipeline effectively supports Continuous Integration and Continuous De
 3. Without SOLID principles, my project would be harder to manage. If `CarController` depended directly on `CarServiceImpl`, switching to a new storage system would require major changes to the controller. A lack of SRP would make `CarController` responsible for handling database logic, leading to large and complex classes that are difficult to modify. Without OCP, adding new features would require modifying existing service classes, increasing the risk of breaking the system. Ignoring DIP would tightly couple `CarController` to `CarServiceImpl`, making it impossible to replace the implementation without modifying the controller. By following SOLID principles, my project remains clean, scalable, and adaptable to future changes.
 
 </details>
+
+<details>
+<Summary><b>Module 4</b></Summary>
+
+### Reflection 1
+
+1. By following the TDD workflow, I was able to improve my code correctness, maintainability, and workflow structure. The RED commits helped in clarifying expectations before implementing features. An example would be writing the Order model tests to ensure that invalid statuses were rejected early. The GREEN commits helped in implementing only the necessary logic to pass tests. The REFACTOR commits helped me in cleaning up hardcoded strings which improved maintainability without breaking existing functionality. In order to improve future tests, I would need to improve the edge case coverage.
+
+2. F.I.R.S.T. principle:
+- Fast: My unit tests ran efficiently as they did not interact with external dependencies . Using Mockito to mock `OrderRepository` sped up execution. 
+- Independent: Tests were isolated and did not depend on each other by using `@BeforeEach` ensuring a clean state before every test. Mocking prevented unintended dependencies, ensuring test independence.
+- Repeatable: Since no external resources were used tests produced consistent results on every run. Tests like `testSetStatusToCancelled()` ran reliably regardless of previous executions.
+- Self-validating: I used assertions like `assertEquals()`, `assertThrows()`, and `assertTrue()` to ensure clear pass/fail results. Error handling tests, such as `testUpdateStatusInvalidOrderId()`, correctly validated exceptions.
+- Timely: Tests were written before implementation, ensuring the code was only developed to pass the necessary requirements.
+
+</details>
