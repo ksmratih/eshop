@@ -1,5 +1,7 @@
 package id.ac.ui.cs.advprog.eshop.model;
 
+import id.ac.ui.cs.advprog.eshop.enums.PaymentMethod;
+import id.ac.ui.cs.advprog.eshop.enums.PaymentStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,33 +26,33 @@ public class PaymentTest {
 
     @Test
     void testCreatePaymentWithValidVoucher() {
-        Payment payment = new Payment("1", "by-voucher", "PENDING", validVoucherData);
+        Payment payment = new Payment("1", PaymentMethod.BY_VOUCHER.getValue(), PaymentStatus.PENDING.getValue(), validVoucherData);
 
         assertEquals("1", payment.getId());
-        assertEquals("by-voucher", payment.getMethod());
+        assertEquals(PaymentMethod.BY_VOUCHER.getValue(), payment.getMethod());
         assertEquals(validVoucherData, payment.getPaymentData());
-        assertEquals("PENDING", payment.getStatus());
+        assertEquals(PaymentStatus.PENDING.getValue(), payment.getStatus());
     }
 
     @Test
     void testPaymentStatusUpdateSuccess() {
-        Payment payment = new Payment("2", "by-voucher", "PENDING", validVoucherData);
-        payment.setStatus("SUCCESS");
+        Payment payment = new Payment("2", PaymentMethod.BY_VOUCHER.getValue(), PaymentStatus.PENDING.getValue(), validVoucherData);
+        payment.setStatus(PaymentStatus.SUCCESS.getValue());
 
-        assertEquals("SUCCESS", payment.getStatus());
+        assertEquals(PaymentStatus.SUCCESS.getValue(), payment.getStatus());
     }
 
     @Test
     void testCreatePaymentWithInvalidVoucher() {
-        Payment payment = new Payment("3", "by-voucher", "PENDING", invalidVoucherData);
+        Payment payment = new Payment("3", PaymentMethod.BY_VOUCHER.getValue(), PaymentStatus.PENDING.getValue(), invalidVoucherData);
 
-        assertEquals("PENDING", payment.getStatus());
+        assertEquals(PaymentStatus.PENDING.getValue(), payment.getStatus());
         assertNotEquals(validVoucherData.get("voucherCode"), payment.getPaymentData().get("voucherCode"));
     }
 
     @Test
     void testInvalidStatusThrowsException() {
-        Payment payment = new Payment("4", "by-voucher", "PENDING", validVoucherData);
+        Payment payment = new Payment("4", PaymentMethod.BY_VOUCHER.getValue(), PaymentStatus.PENDING.getValue(), validVoucherData);
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             payment.setStatus("INVALID_STATUS");
@@ -62,7 +64,7 @@ public class PaymentTest {
     @Test
     void testInvalidMethodThrowsException() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            new Payment("5", "invalid-method", "PENDING", validVoucherData);
+            new Payment("5", "invalid-method", PaymentStatus.PENDING.getValue(), validVoucherData);
         });
 
         assertEquals("Invalid method: invalid-method", exception.getMessage());
