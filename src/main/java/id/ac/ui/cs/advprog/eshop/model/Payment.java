@@ -38,10 +38,10 @@ public class Payment {
     }
 
     public String getMethod() {
-        return method.toString();  // ✅ Ensures tests expect "by-voucher"
+        return method.toString();
     }
 
     public String getStatus() {
-        return status.toString();  // ✅ Ensures tests expect "SUCCESS"
+        return status.toString();
     }
 }

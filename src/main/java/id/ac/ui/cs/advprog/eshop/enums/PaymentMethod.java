@@ -32,7 +32,7 @@ public enum PaymentMethod {
     }
 
     @Override
-    public String toString() {  // ✅ This ensures comparisons work
+    public String toString() {
         return value;
     }
 }

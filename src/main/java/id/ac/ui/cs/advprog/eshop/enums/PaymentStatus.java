@@ -33,7 +33,7 @@ public enum PaymentStatus {
     }
 
     @Override
-    public String toString() {  // ✅ This ensures comparisons work
+    public String toString() {
         return value;
     }
 }

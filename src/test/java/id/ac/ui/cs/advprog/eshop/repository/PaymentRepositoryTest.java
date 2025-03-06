@@ -58,16 +58,18 @@ public class PaymentRepositoryTest {
     void testSaveFromEdit() {
         Payment payment = payments.get(1);
         paymentRepository.save(payment);
+
         Payment modifiedPayment = new Payment(payment.getId(), payment.getMethod(), "SUCCESS", payment.getPaymentData());
         Payment result = paymentRepository.save(modifiedPayment);
 
-        Payment paymentResult = paymentRepository.findById(payments.getFirst().getId());
+        Payment paymentResult = paymentRepository.findById(payment.getId());
         assertEquals(payment.getId(), result.getId());
         assertEquals(payment.getId(), paymentResult.getId());
         assertEquals(payment.getMethod(), paymentResult.getMethod());
         assertEquals("SUCCESS", paymentResult.getStatus());
         assertEquals(payment.getPaymentData(), paymentResult.getPaymentData());
     }
+
 
     @Test
     void testFindByValidId() {
