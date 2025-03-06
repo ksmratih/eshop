@@ -1,18 +1,17 @@
 package id.ac.ui.cs.advprog.eshop.model;
 
+import id.ac.ui.cs.advprog.eshop.enums.PaymentMethod;
+import id.ac.ui.cs.advprog.eshop.enums.PaymentStatus;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.Builder;
-import java.util.Arrays;
 import java.util.Map;
 
 @Getter
 @Setter
-@Builder
 public class Payment {
     private String id;
-    private String method;
-    private String status;
+    private PaymentMethod method;
+    private PaymentStatus status;
     private Map<String, String> paymentData;
 
     public Payment(String id, String method, String status, Map<String, String> paymentData) {
@@ -23,19 +22,26 @@ public class Payment {
     }
 
     public void setStatus(String status) {
-        // ✅ Allowing "PENDING" as a valid status
-        String[] statusList = {"SUCCESS", "REJECTED", "PENDING"};
-        if (Arrays.stream(statusList).noneMatch(item -> item.equals(status))) {
+        if (PaymentStatus.contains(status)) {
+            this.status = PaymentStatus.fromString(status);
+        } else {
             throw new IllegalArgumentException("Invalid status: " + status);
         }
-        this.status = status;
     }
 
     public void setMethod(String method) {
-        String[] methodList = {"by-voucher", "by-transfer"};
-        if (Arrays.stream(methodList).noneMatch(item -> item.equals(method))) {
+        if (PaymentMethod.contains(method)) {
+            this.method = PaymentMethod.fromString(method);
+        } else {
             throw new IllegalArgumentException("Invalid method: " + method);
         }
-        this.method = method;
+    }
+
+    public String getMethod() {
+        return method.toString();  // ✅ Ensures tests expect "by-voucher"
+    }
+
+    public String getStatus() {
+        return status.toString();  // ✅ Ensures tests expect "SUCCESS"
     }
 }

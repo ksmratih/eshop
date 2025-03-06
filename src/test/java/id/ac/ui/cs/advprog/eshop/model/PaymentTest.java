@@ -27,9 +27,9 @@ public class PaymentTest {
         Payment payment = new Payment("1", "by-voucher", "PENDING", validVoucherData);
 
         assertEquals("1", payment.getId());
-        assertEquals("by-voucher", payment.getMethod());
+        assertEquals("by-voucher", payment.getMethod());  // ✅ Removed .getValue()
         assertEquals(validVoucherData, payment.getPaymentData());
-        assertEquals("PENDING", payment.getStatus()); // ✅ Now "PENDING" is allowed
+        assertEquals("PENDING", payment.getStatus());  // ✅ Removed .getValue()
     }
 
     @Test
@@ -37,7 +37,7 @@ public class PaymentTest {
         Payment payment = new Payment("2", "by-voucher", "PENDING", validVoucherData);
         payment.setStatus("SUCCESS");
 
-        assertEquals("SUCCESS", payment.getStatus());
+        assertEquals("SUCCESS", payment.getStatus());  // ✅ Removed .getValue()
     }
 
     @Test
@@ -45,7 +45,7 @@ public class PaymentTest {
         Payment payment = new Payment("3", "by-voucher", "PENDING", invalidVoucherData);
 
         // ✅ Payment should remain "PENDING" initially and not throw an error
-        assertEquals("PENDING", payment.getStatus());
+        assertEquals("PENDING", payment.getStatus());  // ✅ Removed .getValue()
         assertNotEquals(validVoucherData.get("voucherCode"), payment.getPaymentData().get("voucherCode"));
     }
 
