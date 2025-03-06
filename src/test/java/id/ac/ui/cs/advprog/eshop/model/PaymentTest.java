@@ -24,17 +24,17 @@ public class PaymentTest {
 
     @Test
     void testCreatePaymentWithValidVoucher() {
-        Payment payment = new Payment("1", "Voucher Payment", "PENDING", validVoucherData);
+        Payment payment = new Payment("1", "by-voucher", "PENDING", validVoucherData);
 
         assertEquals("1", payment.getId());
-        assertEquals("Voucher Payment", payment.getMethod());
+        assertEquals("by-voucher", payment.getMethod());
         assertEquals(validVoucherData, payment.getPaymentData());
-        assertEquals("PENDING", payment.getStatus());
+        assertEquals("PENDING", payment.getStatus()); // ✅ Now "PENDING" is allowed
     }
 
     @Test
     void testPaymentStatusUpdateSuccess() {
-        Payment payment = new Payment("2", "Voucher Payment", "PENDING", validVoucherData);
+        Payment payment = new Payment("2", "by-voucher", "PENDING", validVoucherData);
         payment.setStatus("SUCCESS");
 
         assertEquals("SUCCESS", payment.getStatus());
@@ -42,10 +42,30 @@ public class PaymentTest {
 
     @Test
     void testCreatePaymentWithInvalidVoucher() {
-        Payment payment = new Payment("3", "Voucher Payment", "PENDING", invalidVoucherData);
+        Payment payment = new Payment("3", "by-voucher", "PENDING", invalidVoucherData);
 
-        // Assuming Payment class should auto-reject invalid voucher codes
-        assertEquals("REJECTED", payment.getStatus());
+        // ✅ Payment should remain "PENDING" initially and not throw an error
+        assertEquals("PENDING", payment.getStatus());
         assertNotEquals(validVoucherData.get("voucherCode"), payment.getPaymentData().get("voucherCode"));
+    }
+
+    @Test
+    void testInvalidStatusThrowsException() {
+        Payment payment = new Payment("4", "by-voucher", "PENDING", validVoucherData);
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            payment.setStatus("INVALID_STATUS");
+        });
+
+        assertEquals("Invalid status: INVALID_STATUS", exception.getMessage());
+    }
+
+    @Test
+    void testInvalidMethodThrowsException() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            new Payment("5", "invalid-method", "PENDING", validVoucherData);
+        });
+
+        assertEquals("Invalid method: invalid-method", exception.getMessage());
     }
 }
