@@ -15,7 +15,7 @@ public enum PaymentMethod {
 
     public static boolean contains(String param) {
         for (PaymentMethod method : PaymentMethod.values()) {
-            if (method.value.equals(param)) {
+            if (method.value.equalsIgnoreCase(param)) {  // Case-insensitive check
                 return true;
             }
         }
@@ -24,11 +24,11 @@ public enum PaymentMethod {
 
     public static PaymentMethod fromString(String param) {
         for (PaymentMethod method : PaymentMethod.values()) {
-            if (method.value.equals(param)) {
+            if (method.value.equalsIgnoreCase(param)) {  // Support variations like "Transfer"
                 return method;
             }
         }
-        throw new IllegalArgumentException("Invalid method: " + param);
+        throw new IllegalArgumentException("Invalid payment method: " + param);
     }
 
     @Override

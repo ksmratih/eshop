@@ -30,12 +30,14 @@ public class Payment {
     }
 
     public void setMethod(String method) {
-        if (PaymentMethod.contains(method)) {
-            this.method = PaymentMethod.fromString(method);
+        if (PaymentMethod.contains(method)) { // Ensure it's a valid method
+            this.method = PaymentMethod.fromString(method); // Convert String to Enum
         } else {
             throw new IllegalArgumentException("Invalid method: " + method);
         }
     }
+
+
 
     public String getMethod() {
         return method.toString();
