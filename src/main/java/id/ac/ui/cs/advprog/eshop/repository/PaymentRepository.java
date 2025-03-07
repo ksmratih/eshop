@@ -3,32 +3,24 @@ package id.ac.ui.cs.advprog.eshop.repository;
 import id.ac.ui.cs.advprog.eshop.model.Payment;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.List;
 
 @Repository
 public class PaymentRepository {
-    private final List<Payment> paymentData = new ArrayList<>();
+    private final Map<String, Payment> paymentData = new HashMap<>();
 
     public Payment save(Payment payment) {
-        for (int i = 0; i < paymentData.size(); i++) {
-            if (paymentData.get(i).getId().equals(payment.getId())) {
-                paymentData.set(i, payment);
-                return payment;
-            }
-        }
-        paymentData.add(payment);
+        paymentData.put(payment.getId(), payment);
         return payment;
     }
 
     public Payment findById(String id) {
-        return paymentData.stream()
-                .filter(payment -> payment.getId().equals(id))
-                .findFirst()
-                .orElse(null);
+        return paymentData.get(id); // O(1) lookup
     }
 
     public List<Payment> findAll() {
-        return new ArrayList<>(paymentData);
+        return List.copyOf(paymentData.values());
     }
 }

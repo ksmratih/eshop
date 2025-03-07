@@ -34,18 +34,19 @@ public class PaymentByVoucher extends Payment {
 
     public void validateVoucher() {
         String voucherCode = getPaymentData().get("voucherCode");
-        int digitCount = 0;
 
-        for (char c : voucherCode.toCharArray()) {
-            if (Character.isDigit(c)) {
-                digitCount++;
-            }
+        if (voucherCode == null) {
+            return;
         }
+
+        int digitCount = (int) voucherCode.chars().filter(Character::isDigit).count();
 
         if (voucherCode.length() == 16 && voucherCode.startsWith("ESHOP") && digitCount == 8) {
             super.setStatus(PaymentStatus.SUCCESS.getValue());
         } else {
+
             super.setStatus(PaymentStatus.REJECTED.getValue());
         }
     }
+
 }
